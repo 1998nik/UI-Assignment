@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <title>Student Login & Registration</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Registration Form</h2>
+        </div>
+        <form  class="form" id="form">
+            <div class="form-control">
+                <label for="">Username</label>
+                <input type="text" id="username" name="" placeholder="Enter Your Full Name">
+                <i class="fa-solid fa-check"></i>
+                <i class="fa-solid fa-exclamation"></i>
+                <small>Error Message</small>
+            </div>
+            <div class="form-control">
+                <label for="">Enrollment Number</label>
+                <input type="number" id="eno" name="" placeholder="Enter Student Enrollment Number">
+                <i class="fa-solid fa-check"></i>
+                <i class="fa-solid fa-exclamation"></i>
+                <small>Error Message</small>
+            </div>
+            <div class="form-control">
+                <label for="">Password</label>
+                <input type="password" id="pass" name="" placeholder="Enter Password">
+                <i class="fa-solid fa-check"></i>
+                <i class="fa-solid fa-exclamation"></i>
+                <small>Error Message</small>
+            </div>
+            <div class="form-control">
+                <label for="">Confirm Password</label>
+                <input type="password" id="conf_pass" name="" placeholder="Confirm Password">
+                <i class="fa-solid fa-check"></i>
+                <i class="fa-solid fa-exclamation"></i>
+                <small>Error Message</small>
+            </div>
+            <input type="submit" value="submit" class ="btn">
+        </form>
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>

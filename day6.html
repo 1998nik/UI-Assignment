@@ -1,0 +1,328 @@
+<html>
+
+<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <center>
+        <h1><b> Employee Record Table</b> </h1>
+
+       
+    </center>
+     
+
+    <table  class="table table-striped table-bordered table-sm">
+        
+        <button type="button" onclick="Add()" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+        <div class="dropdown">
+            <button type="button" id="filter" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" style="float:right;margin-right:16px">
+                <span class="glyphicon glyphicon-filter"></span>filter
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" onclick="sortByName()">Sort by Name</a></li>
+              <li><a class="dropdown-item" onclick="sortByMarks()">Sort by Marks</a></li>
+            </ul>
+        </div>
+        <br>
+        <i class="fa fa-search" aria-hidden="true"></i> &nbsp;
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Employe id "> &nbsp;
+        <input type="text" id="myInput1" onkeyup="Employe()" placeholder=" Search Employe Name">&nbsp;
+        <input type="text" id="myInput2" onkeyup="Email()" placeholder=" Search Employe Email">&nbsp;
+        <input type="text" id="myInput3" onkeyup="phone()" placeholder=" Search phone Number">&nbsp;
+        &nbsp;
+       
+
+       
+        <thead>
+            <tr>
+                <th scope="col">SRNO.</th>
+                <th>Emp id</th>
+                <th>Employee Name</th>
+                <th>Employee salary</th>
+                <th>Email</th>
+                <th>Mobile Number</th>
+                <th>Button</th>
+                <th>
+                    
+                    <!-- <i class="material-icons">&#xE254;</i>
+                    <i class="material-icons">&#xE872;</i></a> -->
+                </th>
+            </tr>
+
+        </thead>
+
+        <tbody id="table-body"></tbody>
+    </table>
+
+</body>
+
+
+<script>
+    $(document).ready(function () {
+$('#table-body').DataTable();
+$('.dataTables_length').addClass('bs-select');
+});
+    const Data = [{
+
+        "Employeid":"101",
+        "EmployeeName": "Nikhil",
+        "Salary": "2500",
+        "email": "1998nik109@gmail.com",
+        "phone": "8058200109"
+    }]
+
+    function Read(add = false, edit = false, k = 0) {
+        if (add) {
+            str = "";
+
+            for (i = 0; i < Data.length; i++) {
+                if (i == Data.length - 1) {
+                    buttons = "<input onclick=\"Save(" + i + ")\" type=\"button\" value=\"Save\"> ";
+                    
+                }
+
+                else {
+                    
+
+                    buttons = "<input onclick=\"Edit(" + i + ")\" type=\"button\" value=\"Edit\">" + 
+                    "<input onclick=\"Delete(" + i + ")\"  type=\"button\" value=\"Delete\"  >";
+
+                    
+                }
+
+                str = str + "<th scope=\"row\">" + (i + 1) + "</th><td>" +Data[i].Employeid+ "</th><td>"+Data[i].EmployeeName +
+                    "</td><td>" + Data[i].Salary + "</td><td>" + Data[i].email +
+                    "</td><td>" + Data[i].phone + "</td><td>" + buttons + "</td></tr>";
+            }
+        }
+
+        else if (edit) {
+            str = "";
+
+            for (i = 0; i < Data.length; i++) {
+                if (i == k) {
+                    buttons = "<input onclick=\"Save(" + i + ")\" type=\"button\" value=\"Save\">";
+                }
+                else {
+                    buttons = "<input onclick=\"Edit(" + i + ")\" type=\"button\" value=\"Edit\">" + "<input onclick=\"Delete(" + i + ")\" type=\"button\" value=\"Delete\">";
+                }
+
+                str = str + "<th scope=\"row\">" + (i + 1) + "</th><td>" +Data[i].Employeid+"</th><td>"+ Data[i].EmployeeName +
+                    "</td><td>" + Data[i].Salary + "</td><td>" + Data[i].email +
+                    "</td><td>" + Data[i].phone + "</td><td>" + buttons + "</td></tr>";
+            }
+        }
+        else {
+            str = "";
+
+
+            for (i = 0; i < Data.length; i++) {
+                buttons = "<input onclick=\"Edit(" + i + ")\" type=\"button\" value=\"Edit\">" + "<input onclick=\"Delete(" + i + ")\" type=\"button\" value=\"Delete\">";
+                str = str + "<th scope=\"row\">" + (i + 1) + "</th><td>"+Data[i].Employeid +"</th><td>"+ Data[i].EmployeeName +
+                    "</td><td>" + Data[i].Salary + "</td><td>" + Data[i].email +
+                    "</td><td>" + Data[i].phone + "</td><td>" + buttons + "</td></tr>";
+            }
+        }
+
+        document.getElementById("table-body").innerHTML = str;
+    }
+    Read()
+    function Add() {
+        Data.push({
+            "Employeid": "<input type=\"text\" placeholder='Employe id' id='input5'>",
+            "EmployeeName": "<input type=\"text\" placeholder='Employe Name' id='input1'>",
+            "Salary": "<input type=\"text\" placeholder='Salary' id='input2'>",
+            "email": "<input type=\"text\" placeholder='Email' id='input3'>",
+            "phone": "<input type=\"text\" placeholder='Mobile' id='input4'>"
+        });
+        Read(add = true);
+    }
+
+    function Edit(i) {
+        Data[i] = {
+            "Employeid": "<input type=\"text\" placeholder='Name' id='input5' value=" + Data[i].Employeid+ ">",
+            "EmployeeName": "<input type=\"text\" placeholder='Name' id='input1' value=" + Data[i].EmployeeName + ">",
+            "Salary": "<input type=\"text\" placeholder='Salary' id='input2' value=" + Data[i].Salary + ">",
+            "email": "<input type=\"text\" placeholder='Email' id='input3' value=" + Data[i].email + ">",
+            "phone": "<input type=\"text\" placeholder='Mobile' id='input4' value=" + Data[i].phone + ">"
+        }
+
+        Read(add = false, edit = true, k = i)
+    }
+
+    function Delete(i) {
+        Data.splice(i, 1);
+        Read();
+    }
+    function Save(i) {
+        console.log(i)
+    
+       
+        var input1 = document.getElementById('input1').value;
+        var input2 = document.getElementById('input2').value;
+        var input3 = document.getElementById('input3').value;
+        var input4 = document.getElementById('input4').value;
+        var input5 = document.getElementById('input5').value;
+        var test = {
+            "Employeid":input5,
+            "EmployeeName": input1,
+            "Salary": input2,
+            "email": input3,
+            "phone": input4,
+        }
+
+
+        Data[i] = test;
+        Read()
+    }
+
+
+    function myFunction() {
+        
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table-body");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function Employe() {
+        
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table-body");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function Email() {
+        
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput2");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table-body");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[3];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function phone(){
+        
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput2");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table-body");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function sortByName() {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("table-body");
+    switching = true;
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+      for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName("td")[1];
+        y = rows[i + 1].getElementsByTagName("td")[1];
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+}
+
+function sortByMarks() {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("table-body");
+    switching = true;
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+      for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName("td")[3];
+        y = rows[i + 1].getElementsByTagName("td")[3];
+        if (parseInt(x.innerHTML.toLowerCase()) > parseInt(y.innerHTML.toLowerCase())) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+}
+</script>
+<img src="employe.jpg" width="1450px" height="900px">
+
+</html>
+
